@@ -27,3 +27,5 @@ Route::get('/register', function () {
 
 Route::post('/user', 'RegisterController@userregister');
 
+Route::post('/user', 'RegisterController@StoreRequest');
+

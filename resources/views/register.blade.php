@@ -57,14 +57,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <form action="{{url('/user')}}" method="post" enctype="multipart/form-data" id="reg-form">
-                        {{ csrf_field() }}
-
-                        @if(@session('response'))
-                                <div class="col-md-8 alert alert-success">
-                                  {{@session('response')}}
-                                </div>
-                        @endif
+                        <form action="register.php" method="post" enctype="multipart/form-data" id="reg-form">
                             <div class="form-row">
                                 <div class="col">
                                     <input type="text" value="<?php if (isset($_POST['firstName'])) {
@@ -151,7 +144,7 @@
 
                         </form>
                     </div>
-                    <!-- #registration area -->
+                    <!-- #registration area  Shopkeeper-->
 
 
                 </div>
@@ -161,13 +154,28 @@
                     <!-- #registration area -->
                     <br><br>
                     <div class="d-flex justify-content-center">
-                        <form action="" method="post" enctype="multipart/form-data" id="reg-form">
-                            <div class="form-row">
+                        <form action="{{url('user')}}" method="post" enctype="multipart/form-data" id="reg-form">
+                        {{csrf_field ()}}
+                        @if(count ($errors)>0)
+                        @foreach($errors->all() as $error)
+                        <div class="alert-alert-danger">{{$error}}</div>
+                        @endforeach
+                        @endif
+                            <div class="form-row my-4">
                                 <div class="col">
-                                    <input type="text" value="<?php if (isset($_POST['username'])) {
-    echo $_POST['username'];
+                                    <input type="text" value="<?php if (isset($_POST['firstname'])) {
+    echo $_POST['firstname'];
 }
-?>" name="username" id="username" class="form-control" placeholder="User Name">
+?>" name="firstname" id="firstname" class="form-control" placeholder="First Name">
+                                </div>
+
+                            </div>
+                            <div class="form-row my-4">
+                                <div class="col">
+                                    <input type="text" value="<?php if (isset($_POST['lastname'])) {
+    echo $_POST['lastname'];
+}
+?>" name="lastname" id="lastname" class="form-control" placeholder="Last Name">
                                 </div>
 
                             </div>
@@ -220,7 +228,7 @@
 
 
 
-                                    <select class="mdb-select md-form" searchable="Search here..">
+                                    <select class="mdb-select md-form" searchable="Search here.." name="businessType">
                                         <option value="" disabled selected>Business Type</option>
                                         <option value="1">Eseential</option>
                                         <option value="2">Electronics</option>
@@ -235,23 +243,39 @@
                                         <option value="11">Animals</option>
                                         <option value="12">Food & Agriculture</option>
                                     </select>
+                                    <br><br>
 
-
-                                    <select class="mdb-select md-form" searchable="Search here..">
-                                        <option value="" disabled selected>Sub Type</option>
-                                        <option value="1">Kzone</option>
-                                        <option value="2">Majestic City</option>
-                                        <option value="3">Liberty Plaza</option>
-                                        <option value="4">Example</option>
-                                        <option value="5">Example</option>
-                                        <option value="6">Example</option>
-                                        <option value="7">Example</option>
-                                        <option value="8">Example</option>
-                                        <option value="9">Example</option>
-                                        <option value="10">Example</option>
-                                        <option value="11">Example</option>
-                                        <option value="12">Example</option>
-                                    </select>
+                            <div class="form-group">
+                            <label>Preferred Merchant</label>
+                            <div class="col">
+                            <div class="radio">
+                            <label> 
+                            <input type="radio" name="merchant" id="kzone" value="kzone" checked="">
+                            K zone 
+                            </label>
+                            <div class="radio">
+                            <label> 
+                            <input type="radio" name="merchant" id="majestic" value="majestic" checked="">
+                            Majestic City
+                            </label>
+                            <div class="radio">
+                            <label> 
+                            <input type="radio" name="merchant" id="liberty" value="liberty" checked="">
+                            Liberty Plaza
+                            </label>
+                            <div class="radio">
+                            <label> 
+                            <input type="radio" name="merchant" id="kandy" value="kandy" checked="">
+                            Kandy City Center
+                            </label>
+                            <div class="radio">
+                            <label> 
+                            <input type="radio" name="merchant" id="onegall" value="onegall" checked="">
+                            One Gallface 
+                            </label>
+                            </div>
+                            </div>
+                            </div>                
 
 
 
@@ -272,7 +296,7 @@
                                     <input type="email" value="<?php if (isset($_POST['Organizationemail'])) {
     echo $_POST['Organizationemail'];
 }
-?>" required name="Organizationemail" id="Organizationemail" class="form-control" placeholder="Organization Email*">
+?>" required  name="Organizationemail" id="Organizationemail" class="form-control" placeholder="Organization Email*">
                                 </div>
                             </div>
 
@@ -299,22 +323,6 @@
 ?>" required name="email" id="email" class="form-control" placeholder="Email*">
                                 </div>
                             </div>
-
-                            <div class="form-row my-4">
-                                <div class="col">
-                                    <input type="password" required name="password" id="password" class="form-control"
-                                        placeholder="password*">
-                                </div>
-                            </div>
-
-                            <div class="form-row my-4">
-                                <div class="col">
-                                    <input type="password" required name="confirm_pwd" id="confirm_pwd"
-                                        class="form-control" placeholder="Confirm Password*">
-                                    <small id="confirm_error" class="text-danger"></small>
-                                </div>
-                            </div>
-
                             <div class="form-check form-check-inline">
                                 <input type="checkbox" name="agreement" class="form-check-input" required>
                                 <label for="agreement" class="form-check-label font-ubuntu text-black-50">I agree <a
@@ -339,7 +347,7 @@
                     <!-- #registration area -->
                    <br><br>
                     <div class="d-flex justify-content-center">
-                        <form action="" method="post" enctype="multipart/form-data" id="reg-form">
+                        <form action="register.php" method="post" enctype="multipart/form-data" id="reg-form">
                             <div class="form-row">
                                 <div class="col">
                                     <input type="text" value="<?php if (isset($_POST['username'])) {
@@ -419,8 +427,7 @@
     echo $_POST['PhoneNumber'];
 }
 ?>" name="PhoneNumber" id="PhoneNumber" class="form-control" placeholder="Contact Number">
-
-                                </div>
+    </div>
                             </div>
 
                             <div class="form-row my-4">
